@@ -1,5 +1,5 @@
 
-def print_2_similarity(text1, text2):  # noqa: ANN001, ANN201
+def print_2_similarity(text1: str, text2: str) -> float: 
     """
     Упрощенная функция вычисления косинусного сходства между двумя текстами
     """

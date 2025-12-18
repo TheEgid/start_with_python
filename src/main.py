@@ -6,22 +6,13 @@ from mytools import print_2_similarity
 from datetime import datetime
 
 logging.basicConfig(level=logging.INFO)
-load_dotenv()
 
-# def print_2_similarity(text1, text2):  # noqa: ANN001, ANN201
-#     """
-#     Упрощенная функция вычисления косинусного сходства между двумя текстами
-#     """
-#     try:
-#         print(f"Сравниваем: '{text1}' и '{text2}'")
-#         # Базовая реализация
-#         return 0.5
-#     except Exception:
-#         return 0.0
+load_dotenv()
 
 def main() -> None:
     try:
-        print_2_similarity("первый", "второй")
+        md: float = print_2_similarity("первый", "второй")
+        print(md)
         sk = os.environ.get("SECRET_KEY", "Not found")
         print(sk)
 
