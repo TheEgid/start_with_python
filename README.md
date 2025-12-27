@@ -1,4 +1,4 @@
-# python1
+# python & SQLite3 Editor VS CODE
 
 ```sh
 cd python-info
@@ -17,4 +17,7 @@ python src/main.py
 ```
 ```sh
 pyinstaller --onefile --clean --name EnvCollector main.py
+```
+```sh
+ruff check --fix .
 ```

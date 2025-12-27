@@ -4,38 +4,43 @@ import os
 from dotenv import load_dotenv
 from mytools import print_2_similarity
 from datetime import datetime
-import sqlite3
+from sqllite_db_tools import init_db, get_users, print_users
 
 logging.basicConfig(level=logging.INFO)
 
 load_dotenv()
 
+def save_secret_to_file(file_path: str):
+    """Получает секретный ключ и записывает его в файл с меткой времени."""
+    secret_key = os.environ.get("SECRET_KEY", "Not found Secret Key")
+
+    with open(file_path, "w", encoding="utf-8") as f:
+        f.write(f"{datetime.now()}\nSECRET_KEY: {secret_key}")
+
+    return secret_key
+
+
 def main() -> None:
     try:
-        md: float = print_2_similarity("первый", "второй")
-        print(md)
-        sk = os.environ.get("SECRET_KEY", "Not found Secret Key")
-        print(sk)
+        # 1. Аналитика (Similarity)
+        similarity_score = print_2_similarity("первый", "второй")
+        print(f"Сходство: {similarity_score}")
 
-        with open("z_key.txt", "w", encoding="utf-8") as f:
-            f.write(f"{datetime.now()}\nSECRET_KEY: {sk}")
+        # 2. Работа с секретами и файлами
+        sk = save_secret_to_file("z_key.txt")
+        print(f"Ключ: {sk}")
 
-        conn = sqlite3.connect('example.db')
-        cursor = conn.cursor()
-        cursor.execute('CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY, name TEXT)')
-
-        cursor.execute('INSERT INTO users (name) VALUES (?)', ('Professional',))
-        conn.commit()
-        conn.close()
-
-        print("База данных SQLite успешно создана и работает!")
-
+        # 3. Работа с БД
+        db_file = 'example.db'
+        init_db(db_file)
+        users = get_users(db_file)
+        print_users(users)
 
     except KeyboardInterrupt:
         logging.info("🛑 Программа прервана пользователем")
         sys.exit(0)
     except Exception as e:
-        logging.exception(f"❌ Критическая ошибка выполнения: {e}")
+        logging.exception(f"❌ Критическая ошибка: {e}")
         sys.exit(1)
 
 if __name__ == "__main__":
