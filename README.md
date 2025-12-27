@@ -4,13 +4,13 @@
 cd python-info
 ```
 ```sh
-python -m venv .venv
+python -m venv myenv
 ```
 ```sh
-source .venv/bin/activate
+.\myenv\Scripts\Activate.ps1
 ```
 ```sh
-pip  install -r .\requirements.txt 
+pip  install -r .\requirements.txt
 ```
 ```sh
 python src/main.py
