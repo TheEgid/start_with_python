@@ -1,3 +1,4 @@
+import logging
 import sqlite3
 
 def init_db(db_name: str):
@@ -12,9 +13,9 @@ def init_db(db_name: str):
 
         if not exists:
             cursor.execute('INSERT INTO users (name) VALUES (?)', (user_name,))
-            print(f"Пользователь {user_name} добавлен.")
+            logging.info(f"Пользователь {user_name} добавлен.")
         else:
-            print(f"Пользователь {user_name} уже есть в базе.")
+            logging.info(f"Пользователь {user_name} уже есть в базе.")
 
 def get_users(db_name: str):
     """Выполняет запрос SELECT и возвращает всех пользователей."""
@@ -30,6 +31,6 @@ def get_users(db_name: str):
 
 def print_users(users):
     """Красиво печатает список пользователей."""
-    print("\n--- Список пользователей в БД ---")
+    logging.info("\n--- Список пользователей в БД ---")
     for user in users:
-        print(f"ID: {user['id']} | Имя: {user['name']}")
+        logging.info(f"ID: {user['id']} | Имя: {user['name']}")

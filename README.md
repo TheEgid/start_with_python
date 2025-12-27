@@ -1,5 +1,8 @@
 # python & SQLite3 Editor VS CODE
 
+libs-
+    pyodbc
+
 ```sh
 cd python-info
 ```

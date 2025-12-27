@@ -2,8 +2,8 @@ import logging
 import sys
 import os
 from dotenv import load_dotenv
-from mytools import print_2_similarity
 from datetime import datetime
+from odbc_tools import load_data_to_excel
 from sqllite_db_tools import init_db, get_users, print_users
 
 logging.basicConfig(level=logging.INFO)
@@ -22,19 +22,18 @@ def save_secret_to_file(file_path: str):
 
 def main() -> None:
     try:
-        # 1. Аналитика (Similarity)
-        similarity_score = print_2_similarity("первый", "второй")
-        print(f"Сходство: {similarity_score}")
-
-        # 2. Работа с секретами и файлами
+        # 1. Работа с секретами и файлами
         sk = save_secret_to_file("z_key.txt")
-        print(f"Ключ: {sk}")
+        logging.info(f"Ключ: {sk}")
 
-        # 3. Работа с БД
+        # 2.
         db_file = 'example.db'
         init_db(db_file)
         users = get_users(db_file)
         print_users(users)
+
+        # 3.
+        load_data_to_excel("Products_Report.xlsx")
 
     except KeyboardInterrupt:
         logging.info("🛑 Программа прервана пользователем")
